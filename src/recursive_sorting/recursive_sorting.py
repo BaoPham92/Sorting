@@ -2,31 +2,54 @@
 def merge(arrA, arrB):
     elements = len(arrA) + len(arrB)
     merged_arr = [0] * elements
-    combined = arrA + arrB
 
-    for index in range(0, len(merged_arr)):
-        merged_arr[index] = combined[index]
+    print(arrA, arrB)
 
-    merged_arr.sort()
+    # * COUNTERS
+    left = 0 
+    right = 0 
+    total = 0
+
+    # * APPEND INDEXES TO MERGED ARRAY
+    while left < len(arrA) and right < len(arrB):
+        if arrA[left] < arrB[right]:
+            merged_arr[total] = arrA[left]
+            left += 1
+        else:
+            merged_arr[total] = arrB[right]
+            right += 1
+        total += 1
+
+    # ? IS ARRAY A AND B EMPTY?
+    while left < len(arrA):
+        merged_arr[total] = arrA[left]
+        left += 1
+        total += 1
+
+    while right < len(arrB):
+        merged_arr[total] = arrB[right]
+        right += 1
+        total += 1
 
     return merged_arr
 
-merge(
-    [1, 5, 8, 4, 2, 9, 6, 0, 3, 7],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-)
-
 # TO-DO: implement the Merge Sort function below USING RECURSION
-
 
 def merge_sort(arr):
     
-    if (len(arr) <= 1):
-        return arr
+    if (len(arr) > 1):
 
-    return merge(arr[:len(arr) // 2 ], arr[len(arr) // 2 :])
+        # * LEFT SIDE ARR
+        left = merge_sort(arr[:len(arr) // 2 ])
 
-print(merge_sort([1, 5, 8, 4, 2, 9, 6, 0, 3, 7]))
+        # * RIGHT SIDE ARR
+        right = merge_sort(arr[len(arr) // 2:])
+
+        arr = merge(left, right)
+
+    return arr
+
+# print(merge_sort([1, 5, 8, 4, 2, 9, 6, 0, 3, 7]))
 
 
 # STRETCH: implement an in-place merge sort algorithm
